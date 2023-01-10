@@ -73,3 +73,86 @@
 	crossorigin="anonymous"></script>
 
 </html>
+
+
+
+
+
+
+UPDATED:
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+	<h2>Dynamic Increment/Decrement Demo</h2>
+	<button class="addProperty">Add Property</button>
+	<button class="delProperty">Delete Property</button>
+	<p class="addProperties"></p>
+</body>
+<script>
+	var count = 1;
+	var limitcount = 6;
+
+	document.querySelector(".addProperty").addEventListener('click', addProperty);
+	document.querySelector(".delProperty").addEventListener('click', delProperty);
+
+	function addProperty(event) {
+		event.preventDefault();
+		if (count < limitcount) {
+			document.querySelector('.addProperties').innerHTML += ` 
+			  <div class="addedProperty">
+			  <div class="d-flex justify-content-between">
+			  <input class="form-control form-control-sm sequence${count}"  type="text" value="${count}" disabled>
+				<input id="propertyid${count}" class="form-control form-control-sm propertyname${count}" type="email"  oninput="check_duplicates()"> 
+				<div id="status${count}"></div>
+			  </div>  
+			  </div>  
+			`;
+			count++;
+		}
+	}
+
+	function delProperty(event) {
+		event.preventDefault();
+		if (count > 1) {
+			var added = document.getElementsByClassName("addedProperty");
+			var lastadded = added[added.length - 1];
+			lastadded.parentNode.removeChild(lastadded);
+			count--;
+		}
+	}
+
+	function check_duplicates() {
+		var myarray = [];
+		for (i = 1; i < count; i++) {
+			document.getElementById("status" + i).innerHTML = "";
+			myarray[i] = document.getElementById("propertyid" + i).value;
+		}
+		for (i = 1; i < count; i++) {
+			var flag = false;
+			for (j = 1; j < count; j++) {
+				if (i == j || myarray[i] == "" || myarray[j] == "")
+					continue;
+				if (myarray[i] == myarray[j]) {
+					flag = true;
+					document.getElementById("status" + i).innerHTML +=
+						"<br>Identical to " + (j);
+				}
+			}
+			if (flag == false)
+				document.getElementById("status" + i).innerHTML = "";
+		}
+	}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+</html>
